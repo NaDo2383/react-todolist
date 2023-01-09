@@ -37,13 +37,26 @@ function App() {
     const arr = tasks.filter((e) => e.isDone === true);
     setDoneTaksNumber(arr.length);
   }
+  
+  console.log(tasks);
+
+  function ChangeTask (para) {
+    tasks.map ((e,index) => {
+      if(index === para){
+        setTask(e.title)
+      }
+    })
+  }
 
   return (
     <div className='container'>
       <div className='row mt-4'>
         <div className='col-md-4'>
           <h1>ToDo list</h1>
-          <div>Done tasks: {doneTaksNumber}</div>
+          <div className='d-flex justify-content-center gap-5'> 
+            <div>All tasks: {tasks.length}</div>
+            <div>Done tasks: {doneTaksNumber}</div>
+          </div>        
           <div className='d-flex gap-3'>
             <input type="text" className='form-control' placeholder='insert task' value={task} onChange={(e) => setTask(e.target.value)}></input>
             <button onClick={addTask} className="btn btn-primary">+add</button>
@@ -59,7 +72,7 @@ function App() {
                 <label for={index} >{e.title}</label>
               </div>
               <div className='gap-3 d-flex'>
-                <button className='btn btn-warning'>Edit</button>
+                <button className='btn btn-warning' onClick={() => ChangeTask(index)}>Edit</button>
                 <button className='btn btn-danger'>Delete</button>
               </div>
             </div>
