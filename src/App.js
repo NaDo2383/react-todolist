@@ -5,7 +5,6 @@ import './App.css';
 function App() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
-  const [isDone, setIsDone] = useState(false);
   const [doneTaksNumber, setDoneTaksNumber] = useState(0);
 
   function addTask() {
