@@ -1,6 +1,7 @@
-import { logDOM } from '@testing-library/react';
+
 import { useState } from 'react';
 import './App.css';
+import Modal from './components/modal';
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
   const [idCustom, setIdCustom] = useState(1)
   const [edintingTaskId, setEdintingTaskId] = useState(0);
   const [edintingTaskIsDone, setEdintingTaskIsDone] = useState();
+  const [modal, setModal] = useState(false);
 
 
   function addTask() {
@@ -48,19 +50,15 @@ function App() {
     const objList = tasks.map((val) => {
       if (val.id === id) {
         val.isDone = !val.isDone;
-
+        if (val.isDone) {
+          setDoneTaksNumber(doneTaksNumber + 1);
+        } else {
+          setDoneTaksNumber(doneTaksNumber - 1);
+        }
       }
       return val;
     })
-
     setTasks(objList);
-    ShowDoneTotal()
-  }
-
-  function ShowDoneTotal() {
-    const arr = tasks.filter((e) => e.isDone === true);
-    setDoneTaksNumber(arr.length);
-    console.log(arr)
   }
 
   function EditTask(para) {
@@ -80,10 +78,18 @@ function App() {
         const newArr1 = [...tasks]
         newArr1.splice(newArr1.indexOf(e), 1)
         setTasks(newArr1);
+        if (e.isDone) {
+          setDoneTaksNumber(doneTaksNumber - 1);
+        }
       }
     })
-    ShowDoneTotal();
   }
+
+  const handleModal = () => {
+    setModal(!modal)
+  }
+
+
   console.log(tasks);
 
   return (
@@ -98,6 +104,9 @@ function App() {
           <div className='d-flex gap-3'>
             <input type="text" className='form-control' placeholder='insert task' value={task} onChange={(e) => setTask(e.target.value)}></input>
             <button onClick={addTask} className="btn btn-primary">+add</button>
+            <button className="btn btn-primary" onClick={handleModal}>
+              Modal
+            </button>
           </div>
         </div>
       </div>
@@ -116,6 +125,16 @@ function App() {
             </div>
           ))}
         </div>
+
+        <Modal
+          modal={modal}
+          setModal={handleModal}
+          task={task}
+          id={idCustom}
+          setTask={setTask}
+          addTask={addTask}
+        />
+
       </div >
     </div >
   );
