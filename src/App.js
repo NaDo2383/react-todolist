@@ -5,7 +5,7 @@ import Modal from './components/modal';
 
 
 function App() {
-  const [task, setTask] = useState("");
+
   const [tasks, setTasks] = useState([]);
   const [doneTaksNumber, setDoneTaksNumber] = useState(0);
   const [idCustom, setIdCustom] = useState(1)
@@ -13,16 +13,17 @@ function App() {
   const [edintingTaskIsDone, setEdintingTaskIsDone] = useState();
   const [modal, setModal] = useState(false);
 
+  const inIt = {
+    task: "",
+    id: idCustom,
+    isDone: false
+  }
+  const [taskObj, setTaskObj] = useState(inIt)
+
 
   function addTask() {
-    const newTaskObj = {
-      id: idCustom,
-      title: task,
-      isDone: false,
-    };
-
     const newArr = [...tasks];
-    if (newTaskObj.title.length > 0) {
+    if (taskObj.title.length > 0) {
       if (edintingTaskId > 0) {
         newArr.map((e) => {
           if (e.id === edintingTaskId) {
@@ -33,14 +34,10 @@ function App() {
           return e;
         })
         setTasks(newArr);
-        setTask("");
         setEdintingTaskId(0)
       } else {
-        newArr.push(newTaskObj);
-        setTasks(newArr);
-        setTask("");
+        newArr.push(taskObj);
         setIdCustom(idCustom + 1);
-        setEdintingTaskId(0);
       }
     }
 
@@ -102,8 +99,10 @@ function App() {
             <div>Done tasks: {doneTaksNumber}</div>
           </div>
           <div className='d-flex gap-3'>
-            <input type="text" className='form-control' placeholder='insert task' value={task} onChange={(e) => setTask(e.target.value)}></input>
-            <button onClick={addTask} className="btn btn-primary">+add</button>
+            <input type="text" className='form-control' placeholder='insert task' value={taskObj.task} onChange={(e) => setTaskObj({ ...taskObj, task: e.target.value })}></input>
+            <button onClick={addTask} className="btn btn-primary">
+              +add
+            </button>
             <button className="btn btn-primary" onClick={handleModal}>
               Modal
             </button>
@@ -129,9 +128,8 @@ function App() {
         <Modal
           modal={modal}
           setModal={handleModal}
-          task={task}
-          id={idCustom}
-          setTask={setTask}
+
+
           addTask={addTask}
         />
 
