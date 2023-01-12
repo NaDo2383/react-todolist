@@ -23,26 +23,33 @@ function App() {
 
   function addTask() {
     const newArr = [...tasks];
-    if (taskObj.title.length > 0) {
+
+    if (taskObj.task.length > 0) {
       if (edintingTaskId > 0) {
         newArr.map((e) => {
           if (e.id === edintingTaskId) {
             e.title = taskObj.task;
             e.isDone = edintingTaskIsDone;
             e.id = edintingTaskId
+            
           }
           return e;
         })
         setTasks(newArr);
         setEdintingTaskId(0)
+        
       } else {
         newArr.push(taskObj);
-        setIdCustom(idCustom + 1);
+        setTasks(newArr);
+        setIdCustom(n => n+1);
       }
     }
-
+    setTaskObj(inIt);
+    handleModal();
+    console.log(tasks);
   }
 
+  
   const onDoneTask = (id) => {
     const objList = tasks.map((val) => {
       if (val.id === id) {
@@ -66,6 +73,8 @@ function App() {
         setTaskObj({ ...taskObj, task: e.task })
       }
     })
+    console.log(edintingTaskId);
+    handleModal();
   }
 
   function DeleteTask(para) {
@@ -115,7 +124,7 @@ function App() {
             <div className='d-flex justify-content-between mt-2 align-items-center'>
               <div className='d-flex'>
                 <input type="checkbox" checked={e.isDone} onChange={() => onDoneTask(e.id)} id={e.id}></input>
-                <label for={e.id} >{e.title}</label>
+                <label for={e.id} >{e.task}</label>
               </div>
               <div className='gap-3 d-flex'>
                 <button className='btn btn-warning' onClick={() => EditTask(e.id)}>Edit</button>
