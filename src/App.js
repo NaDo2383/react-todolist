@@ -27,7 +27,7 @@ function App() {
       if (edintingTaskId > 0) {
         newArr.map((e) => {
           if (e.id === edintingTaskId) {
-            e.title = task;
+            e.title = taskObj.task;
             e.isDone = edintingTaskIsDone;
             e.id = edintingTaskId
           }
@@ -63,7 +63,7 @@ function App() {
       if (e.id === para) {
         setEdintingTaskId(e.id);
         setEdintingTaskIsDone(e.isDone);
-        setTask(e.title)
+        setTaskObj({ ...taskObj, task: e.task })
       }
     })
   }
@@ -128,8 +128,8 @@ function App() {
         <Modal
           modal={modal}
           setModal={handleModal}
-
-
+          taskObj={taskObj}
+          setTaskObj={setTaskObj}
           addTask={addTask}
         />
 
