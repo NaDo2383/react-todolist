@@ -1,4 +1,4 @@
-export default function Modal({ setModal, modal, addTask, setTaskObj, taskObj}) {
+export default function Modal({ setModal, modal, addTask, setTaskObj, taskObj }) {
     const dn = modal ? "block" : "none";
     return (
         <div className="modal" style={{ display: dn }} onClick={setModal}>

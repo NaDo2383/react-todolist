@@ -15,7 +15,7 @@ function App() {
 
   const inIt = {
     task: "",
-    id: idCustom,
+    id: guid(),
     isDone: false
   }
   const [taskObj, setTaskObj] = useState(inIt)
@@ -25,23 +25,22 @@ function App() {
     const newArr = [...tasks];
 
     if (taskObj.task.length > 0) {
-      if (edintingTaskId > 0) {
+      if (edintingTaskId.length > 0) {
         newArr.map((e) => {
           if (e.id === edintingTaskId) {
-            e.title = taskObj.task;
+            e.task = taskObj.task;
             e.isDone = edintingTaskIsDone;
             e.id = edintingTaskId
-            
           }
           return e;
         })
         setTasks(newArr);
         setEdintingTaskId(0)
-        
+
       } else {
+        setTaskObj({ ...taskObj, id: guid() })
         newArr.push(taskObj);
         setTasks(newArr);
-        setIdCustom(n => n+1);
       }
     }
     setTaskObj(inIt);
@@ -49,7 +48,7 @@ function App() {
     console.log(tasks);
   }
 
-  
+
   const onDoneTask = (id) => {
     const objList = tasks.map((val) => {
       if (val.id === id) {
@@ -95,6 +94,15 @@ function App() {
     setModal(!modal)
   }
 
+  function guid() {
+    let s4 = () => {
+      return Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1);
+    }
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  }
+
 
   console.log(tasks);
 
@@ -108,10 +116,10 @@ function App() {
             <div>Done tasks: {doneTaksNumber}</div>
           </div>
           <div className='d-flex gap-3'>
-            <input type="text" className='form-control' placeholder='insert task' value={taskObj.task} onChange={(e) => setTaskObj({ ...taskObj, task: e.target.value })}></input>
+            {/* <input type="text" className='form-control' placeholder='insert task' value={taskObj.task} onChange={(e) => setTaskObj({ ...taskObj, task: e.target.value })}></input>
             <button onClick={addTask} className="btn btn-primary">
               +add
-            </button>
+            </button> */}
             <button className="btn btn-primary" onClick={handleModal}>
               Modal
             </button>
