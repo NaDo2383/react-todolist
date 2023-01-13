@@ -8,7 +8,6 @@ function App() {
 
   const [tasks, setTasks] = useState([]);
   const [doneTaksNumber, setDoneTaksNumber] = useState(0);
-  const [idCustom, setIdCustom] = useState(1)
   const [edintingTaskId, setEdintingTaskId] = useState(0);
   const [edintingTaskIsDone, setEdintingTaskIsDone] = useState();
   const [modal, setModal] = useState(false);
