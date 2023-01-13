@@ -71,7 +71,6 @@ function App() {
         setTaskObj({ ...taskObj, task: e.task })
       }
     })
-    console.log(edintingTaskId);
     handleModal();
   }
 
